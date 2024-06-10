@@ -3,92 +3,90 @@ import java.util.Random;
 
 public class BatalhaNaval {
 
-    int TAMANHO_TABULEIRO = 8;
-    int NUMERO_NAVIOS = 10;
-    int MAX_TENTATIVAS = 30;
-
-     char[][] tabuleiro;
-     int tentativas;
-     Random random;
-     Scanner scanner;
-
     public BatalhaNaval() {
-        tabuleiro = new char[TAMANHO_TABULEIRO][TAMANHO_TABULEIRO];
-        tentativas = 0;
-        random = new Random();
-        scanner = new Scanner(System.in);
+        int TAMANHO_TABULEIRO = 8;
+        int NUMERO_NAVIOS = 10;
+        int MAX_TENTATIVAS = 30;
+    
+        int tentativas = 0;
+        Random random = new Random();
+        Scanner scanner = new Scanner(System.in);
+        String[][] tabuleiro = new String[TAMANHO_TABULEIRO][TAMANHO_TABULEIRO];
 
-        inicializarTabuleiro();
-        posicionarNavios();
+        inicializarTabuleiro(TAMANHO_TABULEIRO, tabuleiro);
+        posicionarNavios(NUMERO_NAVIOS, TAMANHO_TABULEIRO, random, tabuleiro);
+        jogar(tentativas, MAX_TENTATIVAS, TAMANHO_TABULEIRO, scanner, tabuleiro);
     }
 
-    public void inicializarTabuleiro() {
+    public void inicializarTabuleiro(int TAMANHO_TABULEIRO, String[][] tabuleiro) {
         for (int i = 0; i < TAMANHO_TABULEIRO; i++) {
             for (int j = 0; j < TAMANHO_TABULEIRO; j++) {
-                tabuleiro[i][j] = '~'; // água
+                tabuleiro[i][j] = "~"; // água
             }
         }
     }
 
-    public void posicionarNavios() {
+    public void posicionarNavios(int NUMERO_NAVIOS, int TAMANHO_TABULEIRO, Random random, String[][] tabuleiro) {
         for (int i = 0; i < NUMERO_NAVIOS; i++) {
             int linha, coluna;
             do {
                 linha = random.nextInt(TAMANHO_TABULEIRO);
                 coluna = random.nextInt(TAMANHO_TABULEIRO);
-            } while (tabuleiro[linha][coluna] == 'N');
+            } while (tabuleiro[linha][coluna].equals("N"));
 
-            tabuleiro[linha][coluna] = 'N'; // navio
+            tabuleiro[linha][coluna] = "N"; // navio
         }
     }
 
-    public void jogar() {
+    public void jogar(int tentativas, int MAX_TENTATIVAS, int TAMANHO_TABULEIRO, Scanner scanner, String[][] tabuleiro) {
         while (tentativas < MAX_TENTATIVAS) {
             System.out.println("\nTentativa: " + (tentativas + 1));
-            mostrarTabuleiro();
+            mostrarTabuleiro(TAMANHO_TABULEIRO, tabuleiro);
 
-            System.out.print("Insira a linha (0-7): ");
-            int linha = scanner.nextInt();
-            System.out.print("Insira a coluna (0-7): ");
-            int coluna = scanner.nextInt();
+            int linha;
+            do {
+                System.out.print("Insira a linha (0-7): ");
+                linha = scanner.nextInt();
+            } while (linha < 0 || linha > 7);
 
-            if (linha < 0 || linha >= TAMANHO_TABULEIRO || coluna < 0 || coluna >= TAMANHO_TABULEIRO) {
-                System.out.println("Posição inválida! Tente novamente.");
-                continue;
-            }
+            int coluna;
+            do {
+                System.out.print("Insira a coluna (0-7): ");
+                coluna = scanner.nextInt();
+            } while (coluna < 0 || coluna > 7);
 
-            if (tabuleiro[linha][coluna] == 'X' || tabuleiro[linha][coluna] == 'O') {
+            if (tabuleiro[linha][coluna].equals("X") || tabuleiro[linha][coluna].equals("O")) {
                 System.out.println("Você já jogou nessa posição! Tente novamente.");
                 continue;
             }
 
             tentativas++;
 
-            if (tabuleiro[linha][coluna] == 'N') {
+            if (tabuleiro[linha][coluna].equals("N")) {
                 System.out.println("Você acertou um navio!");
-                tabuleiro[linha][coluna] = 'X'; // acerto
-                if (todosNaviosDestruidos()) {
+                tabuleiro[linha][coluna] = "X"; // acerto
+                if (todosNaviosDestruidos(TAMANHO_TABULEIRO, tabuleiro)) {
                     System.out.println("\nParabéns! Você destruiu todos os navios!");
-                    mostrarTabuleiro();
+                    mostrarTabuleiro(TAMANHO_TABULEIRO, tabuleiro);
                     return;
                 }
             } else {
                 System.out.println("Você errou!");
-                tabuleiro[linha][coluna] = 'O'; // erro
+                tabuleiro[linha][coluna] = "O"; // erro
             }
 
             if (tentativas == MAX_TENTATIVAS) {
                 System.out.println("\nFim de jogo! Você não conseguiu destruir todos os navios.");
-                mostrarTabuleiro();
+                mostrarTabuleiro(TAMANHO_TABULEIRO, tabuleiro);
                 return;
             }
         }
     }
 
-    public boolean todosNaviosDestruidos() {
+    public boolean todosNaviosDestruidos(int TAMANHO_TABULEIRO, String[][] tabuleiro) {
         for (int i = 0; i < TAMANHO_TABULEIRO; i++) {
             for (int j = 0; j < TAMANHO_TABULEIRO; j++) {
-                if (tabuleiro[i][j] == 'N') {
+                if (tabuleiro[i][j].equals("N")) {
                     return false;
                 }
             }
@@ -96,12 +94,12 @@ public class BatalhaNaval {
         return true;
     }
 
-    public void mostrarTabuleiro() {
+    public void mostrarTabuleiro(int TAMANHO_TABULEIRO, String[][] tabuleiro) {
         System.out.println("\n  0 1 2 3 4 5 6 7");
         for (int i = 0; i < TAMANHO_TABULEIRO; i++) {
             System.out.print(i + " ");
             for (int j = 0; j < TAMANHO_TABULEIRO; j++) {
-                if (tabuleiro[i][j] == 'N' || tabuleiro[i][j] == '~') {
+                if (tabuleiro[i][j].equals("N") || tabuleiro[i][j].equals("~")) {
                     System.out.print("~ ");
                 } else {
                     System.out.print(tabuleiro[i][j] + " ");
@@ -112,7 +110,6 @@ public class BatalhaNaval {
     }
 
     public static void main(String[] args) {
-        BatalhaNaval jogo = new BatalhaNaval();
-        jogo.jogar();
+        new BatalhaNaval();
     }
 }
