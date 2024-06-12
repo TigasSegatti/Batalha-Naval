@@ -4,22 +4,27 @@ import java.util.Random;
 public class BatalhaNaval {
 
     public BatalhaNaval() {
-        int tamanhoTabuleiro = 8;
-        int qtdNavios = 10;
-        int maximoTentativas = 30;
+        //Cria as variaveis para o tamanho do tabuleiro
+        int tamanhoTabuleiro = 8; //tamanho 8x8
+        int qtdNavios = 10; //quantidade de navios que serão colocados
+        int maximoTentativas = 30; //Quantidade de tentativas que o jogador pode fazer
     
-        int tentativas = 0;
-        Random sorteador = new Random();
-        Scanner scanner = new Scanner(System.in);
-        String[][] tabuleiro = new String[tamanhoTabuleiro][tamanhoTabuleiro];
-        int[][] posicaoNavios = new int[tamanhoTabuleiro][tamanhoTabuleiro];
+        int tentativas = 0; //Tentativas já realizadas pelo jogador 
+        Random sorteador = new Random(); //Chama a classe sorteador 
+        Scanner scanner = new Scanner(System.in); //Chama a classe Scanner 
+        String[][] tabuleiro = new String[tamanhoTabuleiro][tamanhoTabuleiro]; //Cria uma matriz de referência(String) e define tamanho de acordo com tamanhoTabuleiro, no caso 8
+        int[][] posicaoNavios = new int[tamanhoTabuleiro][tamanhoTabuleiro]; //Cria uma matriz do tipo primitivo(Inteiro) e define tamanho 8x8
+        //Foram criadas duas matrizes, A de refência será exibida para o usuario enquanto o jogo estará rodando 
+        //Enquanto a outra será para armazenar os barcos colocados nas posições e exibir onde estavam após o termino do jogo
 
-        inicializarTabuleiro(tamanhoTabuleiro, tabuleiro);
+        //Chama o método passando paramêtros nescessários
+        inicializarTabuleiro(tamanhoTabuleiro, tabuleiro); 
         inicializarPosicaoNavios(tamanhoTabuleiro, posicaoNavios);
         posicionarNavios(qtdNavios, tamanhoTabuleiro, sorteador, posicaoNavios, tabuleiro);
         jogar(tentativas, maximoTentativas, tamanhoTabuleiro, scanner, tabuleiro, posicaoNavios);
     }
 
+    //Método para inicializar o tabuleiro de String, colocando o simbolo de água em todas as posições
     public void inicializarTabuleiro(int tamanhoTabuleiro, String[][] tabuleiro) {
         for (int i = 0; i < tamanhoTabuleiro; i++) {
             for (int j = 0; j < tamanhoTabuleiro; j++) {
@@ -27,7 +32,7 @@ public class BatalhaNaval {
             }
         }
     }
-
+    //Método para inicializar o tabuleiro de inteiros, colocando 0 em todas as posições para representar que não há navio 
     public void inicializarPosicaoNavios(int tamanhoTabuleiro, int[][] posicaoNavios) {
         for (int i = 0; i < tamanhoTabuleiro; i++) {
             for (int j = 0; j < tamanhoTabuleiro; j++) {
@@ -35,13 +40,13 @@ public class BatalhaNaval {
             }
         }
     }
-
+    //Método para posicionar navios
     public void posicionarNavios(int qtdNavios, int tamanhoTabuleiro, Random sorteador, int[][] posicaoNavios, String[][] tabuleiro) {
-        for (int i = 0; i < qtdNavios; i++) {
-            int linha, coluna;
+        for (int i = 0; i < qtdNavios; i++) { //Para i igual a zero, i menor que quantidade de navios (10), i recebe um 
+            int linha, coluna; 
             do {
-                linha = sorteador.nextInt(tamanhoTabuleiro);
-                coluna = sorteador.nextInt(tamanhoTabuleiro);
+                linha = sorteador.nextInt(tamanhoTabuleiro); //Chama a classe sorteador para escolher qual posição de linha (entre 0 e 7)
+                coluna = sorteador.nextInt(tamanhoTabuleiro); //Chama a classe sorteador para escolher qual posição de coluna (entre 0 e 7)
             } while (posicaoNavios[linha][coluna] == 1);
 
             posicaoNavios[linha][coluna] = 1; // navio
