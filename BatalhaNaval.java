@@ -6,16 +6,18 @@ public class BatalhaNaval {
     public BatalhaNaval() {
         int tamanhoTabuleiro = 8;
         int qtdNavios = 10;
-        int maximoTentivas = 30;
+        int maximoTentativas = 30;
     
         int tentativas = 0;
         Random sorteador = new Random();
         Scanner scanner = new Scanner(System.in);
         String[][] tabuleiro = new String[tamanhoTabuleiro][tamanhoTabuleiro];
+        int[][] posicaoNavios = new int[tamanhoTabuleiro][tamanhoTabuleiro];
 
         inicializarTabuleiro(tamanhoTabuleiro, tabuleiro);
-        posicionarNavios(qtdNavios, tamanhoTabuleiro, sorteador, tabuleiro);
-        jogar(tentativas, maximoTentivas, tamanhoTabuleiro, scanner, tabuleiro);
+        inicializarPosicaoNavios(tamanhoTabuleiro, posicaoNavios);
+        posicionarNavios(qtdNavios, tamanhoTabuleiro, sorteador, posicaoNavios, tabuleiro);
+        jogar(tentativas, maximoTentativas, tamanhoTabuleiro, scanner, tabuleiro, posicaoNavios);
     }
 
     public void inicializarTabuleiro(int tamanhoTabuleiro, String[][] tabuleiro) {
@@ -26,20 +28,29 @@ public class BatalhaNaval {
         }
     }
 
-    public void posicionarNavios(int qtdNavios, int tamanhoTabuleiro, Random sorteador, String[][] tabuleiro) {
+    public void inicializarPosicaoNavios(int tamanhoTabuleiro, int[][] posicaoNavios) {
+        for (int i = 0; i < tamanhoTabuleiro; i++) {
+            for (int j = 0; j < tamanhoTabuleiro; j++) {
+                posicaoNavios[i][j] = 0; // sem navio
+            }
+        }
+    }
+
+    public void posicionarNavios(int qtdNavios, int tamanhoTabuleiro, Random sorteador, int[][] posicaoNavios, String[][] tabuleiro) {
         for (int i = 0; i < qtdNavios; i++) {
             int linha, coluna;
             do {
                 linha = sorteador.nextInt(tamanhoTabuleiro);
                 coluna = sorteador.nextInt(tamanhoTabuleiro);
-            } while (tabuleiro[linha][coluna].equals("N"));
+            } while (posicaoNavios[linha][coluna] == 1);
 
+            posicaoNavios[linha][coluna] = 1; // navio
             tabuleiro[linha][coluna] = "N"; // navio
         }
     }
 
-    public void jogar(int tentativas, int maximoTentivas, int tamanhoTabuleiro, Scanner scanner, String[][] tabuleiro) {
-        while (tentativas < maximoTentivas) {
+    public void jogar(int tentativas, int maximoTentativas, int tamanhoTabuleiro, Scanner scanner, String[][] tabuleiro, int[][] posicaoNavios) {
+        while (tentativas < maximoTentativas) {
             System.out.println("\nTentativa: " + (tentativas + 1));
             mostrarTabuleiro(tamanhoTabuleiro, tabuleiro);
 
@@ -68,6 +79,7 @@ public class BatalhaNaval {
                 if (todosNaviosDestruidos(tamanhoTabuleiro, tabuleiro)) {
                     System.out.println("\nParabéns! Você destruiu todos os navios!");
                     mostrarTabuleiro(tamanhoTabuleiro, tabuleiro);
+                    mostrarPosicaoNavios(tamanhoTabuleiro, posicaoNavios);
                     return;
                 }
             } else {
@@ -75,9 +87,10 @@ public class BatalhaNaval {
                 tabuleiro[linha][coluna] = "O"; // erro
             }
 
-            if (tentativas == maximoTentivas) {
+            if (tentativas == maximoTentativas) {
                 System.out.println("\nFim de jogo! Você não conseguiu destruir todos os navios.");
                 mostrarTabuleiro(tamanhoTabuleiro, tabuleiro);
+                mostrarPosicaoNavios(tamanhoTabuleiro, posicaoNavios);
                 return;
             }
         }
@@ -104,6 +117,18 @@ public class BatalhaNaval {
                 } else {
                     System.out.print(tabuleiro[i][j] + " ");
                 }
+            }
+            System.out.println();
+        }
+    }
+
+    public void mostrarPosicaoNavios(int tamanhoTabuleiro, int[][] posicaoNavios) {
+        System.out.println("\nPosição dos Navios:");
+        System.out.println("  0 1 2 3 4 5 6 7");
+        for (int i = 0; i < tamanhoTabuleiro; i++) {
+            System.out.print(i + " ");
+            for (int j = 0; j < tamanhoTabuleiro; j++) {
+                System.out.print(posicaoNavios[i][j] + " ");
             }
             System.out.println();
         }
