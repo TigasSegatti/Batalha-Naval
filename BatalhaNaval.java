@@ -42,8 +42,8 @@ public class BatalhaNaval {
     }
     //Método para posicionar navios
     public void posicionarNavios(int qtdNavios, int tamanhoTabuleiro, Random sorteador, int[][] posicaoNavios, String[][] tabuleiro) {
+        int linha, coluna; 
         for (int i = 0; i < qtdNavios; i++) { //Para i igual a zero, i menor que quantidade de navios (10), i recebe um 
-            int linha, coluna; 
             do {
                 linha = sorteador.nextInt(tamanhoTabuleiro); //Chama a classe sorteador para escolher qual posição de linha (entre 0 e 7)
                 coluna = sorteador.nextInt(tamanhoTabuleiro); //Chama a classe sorteador para escolher qual posição de coluna (entre 0 e 7)
