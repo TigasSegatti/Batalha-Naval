@@ -53,23 +53,23 @@ public class BatalhaNaval {
             tabuleiro[linha][coluna] = "N"; // navio
         }
     }
-
+    //Método para jogar, passa como parametro quantidade de tentativas e o maximo delas, o tamanho do tabuleiro, leitor, Uma matriz de tabuleiro em String e uma matriz do mapeamento dos navios em Integer   
     public void jogar(int tentativas, int maximoTentativas, int tamanhoTabuleiro, Scanner scanner, String[][] tabuleiro, int[][] posicaoNavios) {
-        while (tentativas < maximoTentativas) {
-            System.out.println("\nTentativa: " + (tentativas + 1));
-            mostrarTabuleiro(tamanhoTabuleiro, tabuleiro);
-
+        while (tentativas < maximoTentativas) { //Enquanto tentativa atual for menor que o máximo(30), ele executa
+            System.out.println("\nTentativa: " + (tentativas + 1));//Exibe o número da tentativa atual
+            mostrarTabuleiro(tamanhoTabuleiro, tabuleiro);//Método para exibir tabuleiro 
             int linha;
-            do {
+
+            do { //Laço para o usuario informar o a linha que deseja atacar 
                 System.out.print("Insira a linha (0-7): ");
                 linha = scanner.nextInt();
             } while (linha < 0 || linha > 7);
 
             int coluna;
-            do {
+            do {//Laço para o usuario informar o a coluna que deseja atacar 
                 System.out.print("Insira a coluna (0-7): ");
                 coluna = scanner.nextInt();
-            } while (coluna < 0 || coluna > 7);
+            } while (coluna < 0 || coluna > 7); 
 
             if (tabuleiro[linha][coluna].equals("X") || tabuleiro[linha][coluna].equals("O")) {
                 System.out.println("Você já jogou nessa posição! Tente novamente.");
