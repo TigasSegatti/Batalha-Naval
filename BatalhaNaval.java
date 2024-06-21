@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.InputMismatchException;
 import java.util.Random;
 
 public class BatalhaNaval {
@@ -60,24 +61,42 @@ public void jogar(int tentativas, int maximoTentativas, int tamanhoTabuleiro, Sc
     while (tentativas < maximoTentativas && jogoAtivo) { //Enquanto tentativa atual for menor que o máximo(30), ele executa
         System.out.println("\nTentativa: " + (tentativas + 1));//Exibe o número da tentativa atual
         mostrarTabuleiro(tamanhoTabuleiro, tabuleiro);//Método para exibir tabuleiro 
-        int linha;
+        int linha=0;
+        int coluna=0;
+        boolean entradaValida;
 
-        do {    //Laço para o usuario informar a linha que deseja atacar 
+        do {
             System.out.print("Insira a linha (0-7): ");
-            linha = scanner.nextInt();
-            if(linha<0 || linha>7){
-                System.out.println("Por favor, insira uma linha válida");
+            entradaValida = true;
+            try {
+                linha = scanner.nextInt();
+                if (linha < 0 || linha > 7) {
+                    System.out.println("Por favor, insira uma linha válida");
+                    entradaValida = false;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Por favor, insira um número inteiro.");
+                entradaValida = false;
             }
-        } while (linha < 0 || linha > 7);
-
-        int coluna;
-        do {    //Laço para o usuario informar a coluna que deseja atacar 
+            scanner.nextLine();
+        } while (!entradaValida);
+        
+        do {
             System.out.print("Insira a coluna (0-7): ");
-            coluna = scanner.nextInt();
-            if(coluna<0 || coluna>7){
-                System.out.println("Por favor, insira uma coluna válida");
+            entradaValida = true;
+            try {
+                coluna = scanner.nextInt();
+                if (coluna < 0 || coluna > 7) {
+                    System.out.println("Por favor, insira uma coluna válida");
+                    entradaValida = false;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Por favor, insira um número inteiro.");
+                
+                entradaValida = false;
             }
-        } while (coluna < 0 || coluna > 7); 
+            scanner.nextLine();
+        } while (!entradaValida);
 
         if (tabuleiro[linha][coluna].equals("X") || tabuleiro[linha][coluna].equals("O")) { //Verifica se o jogador já atacou essa posição
             System.out.println("Você já jogou nessa posição! Tente novamente.");
