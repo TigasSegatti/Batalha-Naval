@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.InputMismatchException;
 import java.util.Random;
 
 
@@ -6,7 +7,7 @@ public class BatalhaNavalEntregue {
 
 
     public BatalhaNavalEntregue() {
-        //Cria as variaveis para o tamanho do tabuleiro
+               //Cria as variaveis para o tamanho do tabuleiro
         int tamanhoTabuleiro = 8; //tamanho 8x8
         int qtdNavios = 10; //quantidade de navios que serão colocados
         int maximoTentativas = 30; //Quantidade de tentativas que o jogador pode fazer
@@ -25,7 +26,6 @@ public class BatalhaNavalEntregue {
         posicionarNavios(qtdNavios, tamanhoTabuleiro, sorteador, posicaoNavios, tabuleiro);
         jogar(tentativas, maximoTentativas, tamanhoTabuleiro, scanner, tabuleiro, posicaoNavios);
     }
-
 
     //Método para inicializar o tabuleiro de String, colocando o simbolo de água em todas as posições
     public void inicializarTabuleiro(int tamanhoTabuleiro, String[][] tabuleiro) {
@@ -52,40 +52,58 @@ public class BatalhaNavalEntregue {
                 coluna = sorteador.nextInt(tamanhoTabuleiro); //Chama a classe sorteador para escolher qual posição de coluna (entre 0 e 7)
             } while (posicaoNavios[linha][coluna] == 1);
 
-
             posicaoNavios[linha][coluna] = 1; 
             tabuleiro[linha][coluna] = "N"; 
         }
     }
     //Método para jogar, passa como parametro quantidade de tentativas e o maximo delas, o tamanho do tabuleiro, leitor, Uma matriz de tabuleiro em String e uma matriz do mapeamento dos navios em Integer   
-    public void jogar(int tentativas, int maximoTentativas, int tamanhoTabuleiro, Scanner scanner, String[][] tabuleiro, int[][] posicaoNavios) {
-        while (tentativas < maximoTentativas) { //Enquanto tentativa atual for menor que o máximo(30), ele executa
-            System.out.println("\nTentativa: " + (tentativas + 1));//Exibe o número da tentativa atual
-            mostrarTabuleiro(tamanhoTabuleiro, tabuleiro);//Método para exibir tabuleiro 
-            int linha;
+public void jogar(int tentativas, int maximoTentativas, int tamanhoTabuleiro, Scanner scanner, String[][] tabuleiro, int[][] posicaoNavios) {
+    boolean jogoAtivo = true;
 
+    while (tentativas < maximoTentativas && jogoAtivo) { //Enquanto tentativa atual for menor que o máximo(30), ele executa
+        System.out.println("\nTentativa: " + (tentativas + 1));//Exibe o número da tentativa atual
+        mostrarTabuleiro(tamanhoTabuleiro, tabuleiro);//Método para exibir tabuleiro 
+        int linha=0;
+        int coluna=0;
+        boolean entradaValida;
 
-            do {    //Laço para o usuario informar o a linha que deseja atacar 
-                System.out.print("Insira a linha (0-7): ");
+        do {
+            System.out.print("Insira a linha (0-7): ");
+            entradaValida = true;
+            try {
                 linha = scanner.nextInt();
-            } while (linha < 0 || linha > 7);
-
-
-            int coluna;
-            do {    //Laço para o usuario informar o a coluna que deseja atacar 
-                System.out.print("Insira a coluna (0-7): ");
-                coluna = scanner.nextInt();
-            } while (coluna < 0 || coluna > 7); 
-
-
-            if (tabuleiro[linha][coluna].equals("X") || tabuleiro[linha][coluna].equals("O")) { //Enquanto o usuário 
-                System.out.println("Você já jogou nessa posição! Tente novamente.");
-                continue;
+                if (linha < 0 || linha > 7) {
+                    System.out.println("Por favor, insira uma linha válida");
+                    entradaValida = false;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Por favor, insira um número inteiro.");
+                entradaValida = false;
             }
+            scanner.nextLine();
+        } while (!entradaValida);
+        
+        do {
+            System.out.print("Insira a coluna (0-7): ");
+            entradaValida = true;
+            try {
+                coluna = scanner.nextInt();
+                if (coluna < 0 || coluna > 7) {
+                    System.out.println("Por favor, insira uma coluna válida");
+                    entradaValida = false;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Por favor, insira um número inteiro.");
+                
+                entradaValida = false;
+            }
+            scanner.nextLine();
+        } while (!entradaValida);
 
-
+        if (tabuleiro[linha][coluna].equals("X") || tabuleiro[linha][coluna].equals("O")) { //Verifica se o jogador já atacou essa posição
+            System.out.println("Você já jogou nessa posição! Tente novamente.");
+        } else {
             tentativas++;
-
 
             if (tabuleiro[linha][coluna].equals("N")) { // Verifica se o jogador acerta o navio
                 System.out.println("Você acertou um navio!");
@@ -94,23 +112,22 @@ public class BatalhaNavalEntregue {
                     System.out.println("\nParabéns! Você destruiu todos os navios!");
                     mostrarTabuleiro(tamanhoTabuleiro, tabuleiro); //Chama o método para mostrar tabuleiro visual 
                     mostrarPosicaoNavios(tamanhoTabuleiro, posicaoNavios);  //Chama o método para mostrar tabuleiro de números
-                    return; //Sai do método caso o jogador vença
+                    jogoAtivo = false; // Indica que o jogo terminou
                 }
             } else {
-                System.out.println("Você errou!");
-                tabuleiro[linha][coluna] = "O"; // erro
+                System.out.println("\nVocê errou!");
+                tabuleiro[linha][coluna] = "O"; 
             }
 
-
-            if (tentativas == maximoTentativas) { //Caso a quantidade de vezes que o jogador jogou sejá igual ao limite de jogadas, ele perde.
+            if (tentativas == maximoTentativas) { 
                 System.out.println("\nFim de jogo! Você não conseguiu destruir todos os navios."); 
-                mostrarTabuleiro(tamanhoTabuleiro, tabuleiro);  //Chama o método para mostrar tabuleiro visual 
-                mostrarPosicaoNavios(tamanhoTabuleiro, posicaoNavios); //Chama o método para mostrar tabuleiro de números
-                return; // Sai do método quaso o jogador perca
+                mostrarTabuleiro(tamanhoTabuleiro, tabuleiro); 
+                mostrarPosicaoNavios(tamanhoTabuleiro, posicaoNavios); 
+                jogoAtivo = false; // Indica que o jogo terminou
             }
         }
     }
-
+}
 
     
     public boolean todosNaviosDestruidos(int tamanhoTabuleiro, String[][] tabuleiro) { //Método que passa como parametro o valor integer do tamanho do tabuleiro e uma matriz visual(String) que é o tabuleiro  
@@ -123,7 +140,6 @@ public class BatalhaNavalEntregue {
         }
         return true; // Retorna verdadeiro caso todos forem destruidos
     }
-
 
  //Passa o tamanho do tabuleiro e uma Matriz visual(String) como parametros 
     public void mostrarTabuleiro(int tamanhoTabuleiro, String[][] tabuleiro) { 
@@ -155,6 +171,7 @@ public class BatalhaNavalEntregue {
             System.out.println();
         }
     }
+
 
 
     public static void main(String[] args) {
