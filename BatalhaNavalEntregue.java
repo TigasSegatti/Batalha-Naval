@@ -151,7 +151,7 @@ public class BatalhaNavalEntregue {
         for (int i = 0; i < tamanhoTabuleiro; i++) {
             System.out.print(i + " ");
             for (int j = 0; j < tamanhoTabuleiro; j++) {
-                if (tabuleiro[i][j].equals("N") || tabuleiro[i][j].equals("~")) {
+                if (tabuleiro[i][j].equals("~")) {
 
                     System.out.print("~ ");
                 } else {
