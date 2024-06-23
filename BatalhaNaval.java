@@ -37,23 +37,24 @@ public class BatalhaNaval {
     public void inicializarPosicaoNavios(int tamanhoTabuleiro, int[][] posicaoNavios) {
         for (int i = 0; i < tamanhoTabuleiro; i++) {
             for (int j = 0; j < tamanhoTabuleiro; j++) {
-                posicaoNavios[i][j] = 0; // sem navio
+                posicaoNavios[i][j] = 0;
             }
         }
     }
-    //Método para posicionar navios
-    public void posicionarNavios(int qtdNavios, int tamanhoTabuleiro, Random sorteador, int[][] posicaoNavios, String[][] tabuleiro) {
-        int linha, coluna; 
-        for (int i = 0; i < qtdNavios; i++) { //Para i igual a zero, i menor que quantidade de navios (10), i recebe um 
+ // Método sem retorno(void) para posicionar navios. Recebe a quantidade de
+    // navios, classe Random, a matriz de posição e visual para jogador.
+    public void posicionarNavios(int qtdNavios, int tamanhoTabuleiro, Random sorteador, int[][] posicaoNavios,
+            String[][] tabuleiro) {
+        int linha, coluna;
+        for (int i = 0; i < qtdNavios; i++) {
             do {
-                linha = sorteador.nextInt(tamanhoTabuleiro); //Chama a classe sorteador para escolher qual posição de linha (entre 0 e 7)
-                coluna = sorteador.nextInt(tamanhoTabuleiro); //Chama a classe sorteador para escolher qual posição de coluna (entre 0 e 7)
+                linha = sorteador.nextInt(tamanhoTabuleiro);
+                coluna = sorteador.nextInt(tamanhoTabuleiro);
             } while (posicaoNavios[linha][coluna] == 1);
-
-            posicaoNavios[linha][coluna] = 1; 
-            tabuleiro[linha][coluna] = "N"; 
+            posicaoNavios[linha][coluna] = 1;
         }
     }
+
     //Método para jogar, passa como parametro quantidade de tentativas e o maximo delas, o tamanho do tabuleiro, leitor, Uma matriz de tabuleiro em String e uma matriz do mapeamento dos navios em Integer   
 public void jogar(int tentativas, int maximoTentativas, int tamanhoTabuleiro, Scanner scanner, String[][] tabuleiro, int[][] posicaoNavios) {
     boolean jogoAtivo = true;
@@ -103,7 +104,7 @@ public void jogar(int tentativas, int maximoTentativas, int tamanhoTabuleiro, Sc
         } else {
             tentativas++;
 
-            if (tabuleiro[linha][coluna].equals("N")) { // Verifica se o jogador acerta o navio
+            if (posicaoNavios[linha][coluna] == 1) { // Verifica se o jogador acerta o navio
                 System.out.println("Você acertou um navio!");
                 tabuleiro[linha][coluna] = "X"; // acerto
                 if (todosNaviosDestruidos(tamanhoTabuleiro, tabuleiro)) { //Passa como parametro o tamanho do tabuleiro e o tabuleiro em forma de matriz para o jogador visualizar
@@ -126,17 +127,17 @@ public void jogar(int tentativas, int maximoTentativas, int tamanhoTabuleiro, Sc
         }
     }
 }
-
-    
-    public boolean todosNaviosDestruidos(int tamanhoTabuleiro, String[][] tabuleiro) { //Método que passa como parametro o valor integer do tamanho do tabuleiro e uma matriz visual(String) que é o tabuleiro  
-        for (int i = 0; i < tamanhoTabuleiro; i++) { 
+    // Método com retorno booleano. Que passa como parametro o tamanho do tabuleiro e uma matriz visual. Nele é verificado se todos os navios foram destruidos.
+    public boolean todosNaviosDestruidos(int tamanhoTabuleiro, String[][] tabuleiro) {
+        int contador = 0;
+        for (int i = 0; i < tamanhoTabuleiro; i++) {
             for (int j = 0; j < tamanhoTabuleiro; j++) {
-                if (tabuleiro[i][j].equals("N")) { //Se no tabuleiro aparece algum navio ainda presente o jogo continua 
-                    return false; //Retorna falso 
+                if (tabuleiro[i][j].equals("X")) {
+                    contador++;
                 }
             }
         }
-        return true; // Retorna verdadeiro caso todos forem destruidos
+        return contador == 10;
     }
 
  //Passa o tamanho do tabuleiro e uma Matriz visual(String) como parametros 
