@@ -7,17 +7,44 @@ public class BatalhaNavalEntregue {
         int tamanhoTabuleiro = 8;
         int qtdNavios = 10;
         int maximoTentativas = 30;
-
+        int op=0;
         int tentativas = 0;
         Random sorteador = new Random();
         Scanner scanner = new Scanner(System.in);
         String[][] tabuleiro = new String[tamanhoTabuleiro][tamanhoTabuleiro];
         int[][] posicaoNavios = new int[tamanhoTabuleiro][tamanhoTabuleiro];
+    
+        do{
+            System.out.println("Menu \n1-Iniciar jogo \n2-Instruções \n3-Sair do jogo");
+             op=scanner.nextInt();
+            switch (op) {
+                case 1:
+                inicializarTabuleiro(tamanhoTabuleiro, tabuleiro);
+                inicializarPosicaoNavios(tamanhoTabuleiro, posicaoNavios);
+                posicionarNavios(qtdNavios, tamanhoTabuleiro, sorteador, posicaoNavios, tabuleiro);
+                jogar(tentativas, maximoTentativas, tamanhoTabuleiro, scanner, tabuleiro, posicaoNavios);
+                break;
+                case 2:
+                exibirRegras();
+                break;
+                case 3:
+                op=3;
+                System.out.println("Até a próxima...");
+                break;
+                default: 
+                System.out.println("Escolha inválida");
+                    break;
+            }
+        }while(op!=3);
 
-        inicializarTabuleiro(tamanhoTabuleiro, tabuleiro);
-        inicializarPosicaoNavios(tamanhoTabuleiro, posicaoNavios);
-        posicionarNavios(qtdNavios, tamanhoTabuleiro, sorteador, posicaoNavios, tabuleiro);
-        jogar(tentativas, maximoTentativas, tamanhoTabuleiro, scanner, tabuleiro, posicaoNavios);
+    }
+    // Método sem retorno para exibir as regras do jogo. Não recebe nenhum parâmetro
+    public void exibirRegras(){
+        System.out.println("Regras: ");
+        System.out.println("No tabuleiro existe 10 embarações e o jogador deve acertar todos para vencer");
+        System.out.println("O jogador possui 30 tentativas para acertar os navios");
+        System.out.println("O Jogador deve inserir a linha e a coluna entre 0 a 7 para acertar um navio");
+  
     }
 
     // Método sem retorno(void). Insere o simbolo ~ no tabuleiro visual para simbolizar a água.
