@@ -15,7 +15,7 @@ public class BatalhaNavalEntregue {
         int[][] posicaoNavios = new int[tamanhoTabuleiro][tamanhoTabuleiro];
     
         do{
-            System.out.println("Menu \n1-Iniciar jogo \n2-Instruções \n3-Sair do jogo");
+            System.out.println("Menu \n1-Iniciar jogo \n2-Regras do jogo \n3-Sair do jogo");
              op=scanner.nextInt();
             switch (op) {
                 case 1:
@@ -38,13 +38,13 @@ public class BatalhaNavalEntregue {
         }while(op!=3);
 
     }
-    // Método sem retorno para exibir as regras do jogo. Não recebe nenhum parâmetro
+    // Método sem retorno para exibir as regras do jogo. Não recebe nenhum parâmetro.
     public void exibirRegras(){
         System.out.println("Regras: ");
         System.out.println("No tabuleiro existe 10 embarações e o jogador deve acertar todos para vencer");
         System.out.println("O jogador possui 30 tentativas para acertar os navios");
         System.out.println("O Jogador deve inserir a linha e a coluna entre 0 a 7 para acertar um navio");
-  
+        System.out.println("Se o jogador acertar um navio, é marcado um (X) no local, Caso contrário, será marcado um (O) no local. \nO jogador não poderá atacar novamente no mesmo local");
     }
 
     // Método sem retorno(void). Insere o simbolo ~ no tabuleiro visual para simbolizar a água.
