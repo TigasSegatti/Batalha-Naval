@@ -92,10 +92,15 @@ public class BatalhaNavalEntregue {
     }
 
     // Método sem retorno(void), passa como parametro quantidade de tentativas e o maximo
-    // delas, o tamanho do tabuleiro, classe Scanner, Uma matriz visual para o jogador e uma para posição dos navios.
-    // Dentro dele acontece todo o jogo e ele chama métodos tambem, como de mostrar o tabuleiro para o jogador.
-    public void jogar(int tentativas, int maximoTentativas, int tamanhoTabuleiro, Scanner scanner, String[][] tabuleiro,
-            char[][] posicaoNavios) {
+    // int tentativas é utilizado na condição do primeiro while, para quando ela atingir "int maximoTentativas" encerrar o jogo
+    // int tamanhoTabuleiro é utilizado para quando é chamado o método "mostrarTabuleiro", "mostrarPosiçãoNavios" e "todosNaviosDestruidos"
+    // Classe Scanner é utilizado para a coleta das linhas e colunas
+    // Matriz Stirng tabuleiro é utuilizado quando chamamos o método "mostrarTabuleiro", é usado 
+    // como comparação no primeiro "if" para verificar se a posição escolhida ja foi selecionada antes.
+    // No segundo "if" é utilizado para colocar um X na posição escolhida se nela existir um navio, e também utilizado quando 
+    // chamamos o método "mostrarPosicaoNavios";
+    // Matriz char posicaoNavios é utilizado no "if" como verificação para descobrir se na posição escolhida há um navio.
+    public void jogar(int tentativas, int maximoTentativas, int tamanhoTabuleiro, Scanner scanner, String[][] tabuleiro,char[][] posicaoNavios) {
         boolean jogoAtivo = true;
 
         while (tentativas < maximoTentativas && jogoAtivo) {
