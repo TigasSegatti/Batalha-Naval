@@ -171,7 +171,13 @@ public class BatalhaNavalEntregue {
                 }
             }
         }
-        return contador == 10;
+        if(contador==10){
+            return true;
+        }
+        else{
+            return false;
+        }
+      
     }
 
     // Método sem retorno(void), mostra o tabuleiro atualizado ao jogador. Recebe o tabuleiro e o seu tamanho como parâmetro.
