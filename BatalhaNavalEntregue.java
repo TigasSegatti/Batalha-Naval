@@ -52,7 +52,8 @@ public class BatalhaNavalEntregue {
     }
 
     // Método sem retorno(void). Insere o simbolo ~ no tabuleiro visual para simbolizar a água.
-    // Passa como parametro o tamanho do tabuleiro e uma matriz visual
+    //É passado int tamanhoTabuleiro para servir de tamanho que o tabuleiro possui. no caso 8x8,para ser usado no (for)
+    //Uma Matriz String tabuleiro, para ter seus seus indices preenchidos com (~) para representar água 
     public void inicializarTabuleiro(int tamanhoTabuleiro, String[][] tabuleiro) {
         for (int i = 0; i < tamanhoTabuleiro; i++) {
             for (int j = 0; j < tamanhoTabuleiro; j++) {
@@ -61,8 +62,10 @@ public class BatalhaNavalEntregue {
         }
     }
 
-    // Método sem retorno(void) para inicializar o tabuleiro de inteiros, colocando 0 em todas as posições para representar que não há navio.
+    // Método sem retorno(void) para inicializar o tabuleiro de inteiros. Insere o simbolo ~ no tabuleiro visual para simbolizar a água.
     // Passa como parametro tamanho do tabuleiro e uma matriz para armazenar a posição dos navios.
+    // Utiliza int tamanhoTabuleiro para servir de tamanho que o tabuleiro possui, para ser usado no (for)
+    // Utiliza Matriz char posicaoNavios, para ter seus seus indices preenchidos com (~) para representar água 
     public void inicializarPosicaoNavios(int tamanhoTabuleiro, char[][] posicaoNavios) {
         for (int i = 0; i < tamanhoTabuleiro; i++) {
             for (int j = 0; j < tamanhoTabuleiro; j++) {
@@ -71,8 +74,11 @@ public class BatalhaNavalEntregue {
         }
     }
 
-    // Método sem retorno(void) para posicionar navios. Recebe a quantidade de
-    // navios, classe Random, a matriz de posição e visual para jogador.
+    // Método sem retorno(void) para posicionar navios no tabuleiro que apenas o jogo consegue ver.
+    //  int qtdNavios para se usado no loop for para comparar quantos navios foram postos.
+    //  int tamanhoTabuleiro para ser sorteado um número entre 0 e 7(Limite do tabuleiro)
+    //  Random sorteador, uma classe que vai sortear o número de acordo com o padrão, no caso 0 a 7
+    //  Matriz char posicaoNavio, é usado para colocar a letra(N) e representar o navio 
     public void posicionarNavios(int qtdNavios, int tamanhoTabuleiro, Random sorteador, char[][] posicaoNavios,
             String[][] tabuleiro) {
         int linha, coluna;
@@ -161,7 +167,9 @@ public class BatalhaNavalEntregue {
         }
     }
 
-    // Método com retorno booleano. Que passa como parâmetro o tamanho do tabuleiro e uma matriz visual. Nele é verificado se todos os navios foram destruidos.
+    // Método com retorno booleano. Nele é feita a verificação de quantos navios destruidos (X) aparece no tabuleiro
+    // Utiliza int tamanhoTabuleiro para servir de tamanho que o tabuleiro possui, para ser usado no (for)
+    //  
     public boolean todosNaviosDestruidos(int tamanhoTabuleiro, String[][] tabuleiro) {
         int contador = 0;
         for (int i = 0; i < tamanhoTabuleiro; i++) {
@@ -181,6 +189,8 @@ public class BatalhaNavalEntregue {
     }
 
     // Método sem retorno(void), mostra o tabuleiro atualizado ao jogador. Recebe o tabuleiro e o seu tamanho como parâmetro.
+    // Utiliza int tamanhoTabuleiro para servir de tamanho que o tabuleiro possui, para ser usado no (for)
+    // Utiliza Matriz String tabuleiro para mostrar o que possui no indice. Seja mar, X ou O. 
     public void mostrarTabuleiro(int tamanhoTabuleiro, String[][] tabuleiro) {
         System.out.println("\n  0 1 2 3 4 5 6 7");
         for (int i = 0; i < tamanhoTabuleiro; i++) {
@@ -200,6 +210,8 @@ public class BatalhaNavalEntregue {
 
     // Método sem retorno(void) exibido após o termino de todas as jogadas, vitória ou derrota do jogado.
     // Passa como parâmetro o tamanho do tabuleiro e uma matriz que contêm a posição dos navios.
+    // Utiliza int tamanhoTabuleiro para servir de tamanho que o tabuleiro possui, para ser usado no (for)
+    // Matriz char posição navio para exibir ao jogador aonde estão os navios(N). 
     public void mostrarPosicaoNavios(int tamanhoTabuleiro, char[][] posicaoNavios) {
         System.out.println("\nPosição dos Navios:");
         System.out.println("  0 1 2 3 4 5 6 7");
