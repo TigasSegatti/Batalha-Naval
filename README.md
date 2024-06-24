@@ -2,7 +2,7 @@ Feito pelo VSCode, trabalho final do 1 Semestre da faculdade de BCC.
 
 Objetivo: 
 Aplicação em Java que simule o jogo Batalha Naval, jogado via
-terminal. permite que o jogador ataque coordenadas no tabuleiro e
+terminal. Permite que o jogador ataque coordenadas no tabuleiro e
 receba feedback sobre os ataques, se acertou ou errou navios.
 
 Descrição:
