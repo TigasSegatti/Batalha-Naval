@@ -62,7 +62,7 @@ public class BatalhaNavalEntregue {
         }
     }
 
-    // Método sem retorno(void) para inicializar o tabuleiro de inteiros. Insere o simbolo ~ no tabuleiro visual para simbolizar a água.
+    // Método sem retorno(void), usado para preencher os indices com simbolo (~) no tabuleiro visual para simbolizar a água.
     // Passa como parametro tamanho do tabuleiro e uma matriz para armazenar a posição dos navios.
     // Utiliza int tamanhoTabuleiro para servir de tamanho que o tabuleiro possui, para ser usado no (for)
     // Utiliza Matriz char posicaoNavios, para ter seus seus indices preenchidos com (~) para representar água 
@@ -74,7 +74,7 @@ public class BatalhaNavalEntregue {
         }
     }
 
-    // Método sem retorno(void) para posicionar navios no tabuleiro que apenas o jogo consegue ver.
+    // Método sem retorno(void), usado para posicionar navios no tabuleiro que apenas o jogo consegue ver.
     //  int qtdNavios para se usado no loop for para comparar quantos navios foram postos.
     //  int tamanhoTabuleiro para ser sorteado um número entre 0 e 7(Limite do tabuleiro)
     //  Random sorteador, uma classe que vai sortear o número de acordo com o padrão, no caso 0 a 7
@@ -169,7 +169,7 @@ public class BatalhaNavalEntregue {
 
     // Método com retorno booleano. Nele é feita a verificação de quantos navios destruidos (X) aparece no tabuleiro
     // Utiliza int tamanhoTabuleiro para servir de tamanho que o tabuleiro possui, para ser usado no (for)
-    //  
+    // Matriz String tabuleiro para olhar cada indice se possui algum (X). 
     public boolean todosNaviosDestruidos(int tamanhoTabuleiro, String[][] tabuleiro) {
         int contador = 0;
         for (int i = 0; i < tamanhoTabuleiro; i++) {
@@ -188,7 +188,7 @@ public class BatalhaNavalEntregue {
       
     }
 
-    // Método sem retorno(void), mostra o tabuleiro atualizado ao jogador. Recebe o tabuleiro e o seu tamanho como parâmetro.
+    // Método sem retorno(void), mostra o tabuleiro ao jogador, indicando a posições de navios destruidos e tiros na água.
     // Utiliza int tamanhoTabuleiro para servir de tamanho que o tabuleiro possui, para ser usado no (for)
     // Utiliza Matriz String tabuleiro para mostrar o que possui no indice. Seja mar, X ou O. 
     public void mostrarTabuleiro(int tamanhoTabuleiro, String[][] tabuleiro) {
@@ -208,7 +208,7 @@ public class BatalhaNavalEntregue {
         }
     }
 
-    // Método sem retorno(void) exibido após o termino de todas as jogadas, vitória ou derrota do jogado.
+    // Método sem retorno(void). Nele mostra a posição de todos os barcos assim que o jogo acaba.
     // Passa como parâmetro o tamanho do tabuleiro e uma matriz que contêm a posição dos navios.
     // Utiliza int tamanhoTabuleiro para servir de tamanho que o tabuleiro possui, para ser usado no (for)
     // Matriz char posição navio para exibir ao jogador aonde estão os navios(N). 
