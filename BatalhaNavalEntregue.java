@@ -24,16 +24,20 @@ public class BatalhaNavalEntregue {
                 posicionarNavios(qtdNavios, tamanhoTabuleiro, sorteador, posicaoNavios, tabuleiro);
                 jogar(tentativas, maximoTentativas, tamanhoTabuleiro, scanner, tabuleiro, posicaoNavios);
                 break;
+
                 case 2:
                 exibirRegras();
                 break;
+
                 case 3:
                 op=3;
                 System.out.println("Até a próxima...");
                 break;
+
                 default: 
                 System.out.println("Escolha inválida");
-                    break;
+                break;
+                
             }
         }while(op!=3);
 
@@ -58,7 +62,7 @@ public class BatalhaNavalEntregue {
     }
 
     // Método sem retorno(void) para inicializar o tabuleiro de inteiros, colocando 0 em todas as posições para representar que não há navio.
-    // Passa como parametro tamanho do tabuleiro e uma matriz para armazenar a posição dos navios
+    // Passa como parametro tamanho do tabuleiro e uma matriz para armazenar a posição dos navios.
     public void inicializarPosicaoNavios(int tamanhoTabuleiro, int[][] posicaoNavios) {
         for (int i = 0; i < tamanhoTabuleiro; i++) {
             for (int j = 0; j < tamanhoTabuleiro; j++) {
@@ -85,7 +89,7 @@ public class BatalhaNavalEntregue {
     // delas, o tamanho do tabuleiro, classe Scanner, Uma matriz visual para o
     // jogador e uma de números.
     // Dentro dele acontece todo o jogo e ele chama métodos tambem, como de mostrar
-    // o tabuleiro para o jogador
+    // o tabuleiro para o jogador.
     public void jogar(int tentativas, int maximoTentativas, int tamanhoTabuleiro, Scanner scanner, String[][] tabuleiro,
             int[][] posicaoNavios) {
         boolean jogoAtivo = true;
@@ -159,7 +163,7 @@ public class BatalhaNavalEntregue {
         }
     }
 
-    // Método com retorno booleano. Que passa como parametro o tamanho do tabuleiro e uma matriz visual. Nele é verificado se todos os navios foram destruidos.
+    // Método com retorno booleano. Que passa como parâmetro o tamanho do tabuleiro e uma matriz visual. Nele é verificado se todos os navios foram destruidos.
     public boolean todosNaviosDestruidos(int tamanhoTabuleiro, String[][] tabuleiro) {
         int contador = 0;
         for (int i = 0; i < tamanhoTabuleiro; i++) {
@@ -172,7 +176,7 @@ public class BatalhaNavalEntregue {
         return contador == 10;
     }
 
-    // Método sem retorno(void), apenas mostra o tabuleiro e recebe o tabuleiro e o seu tamanho como parametro
+    // Método sem retorno(void), apenas mostra o tabuleiro e recebe o tabuleiro e o seu tamanho como parâmetro.
     public void mostrarTabuleiro(int tamanhoTabuleiro, String[][] tabuleiro) {
         System.out.println("\n  0 1 2 3 4 5 6 7");
         for (int i = 0; i < tamanhoTabuleiro; i++) {
@@ -190,7 +194,7 @@ public class BatalhaNavalEntregue {
         }
     }
 
-    // Método sem retorno(void) exibido após o termino de todas as jogadas, vitória ou derrota do jogado. Passa uma variavel int para ser o tamamho do tabuleiro.
+    // Método sem retorno(void) exibido após o termino de todas as jogadas, vitória ou derrota do jogado. Passa como parâmetro o tamanho do tabuleiro e uma matriz que contêm a posição dos navios
     public void mostrarPosicaoNavios(int tamanhoTabuleiro, int[][] posicaoNavios) {
         System.out.println("\nAonde marcar 1, indica que possui navio. Caso marque zero, a posição é vazia.");
         System.out.println("\nPosição dos Navios:");
